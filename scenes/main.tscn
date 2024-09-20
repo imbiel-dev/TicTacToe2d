@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://ctrw6eiulqiif"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_jbt5h"]
+[ext_resource type="PackedScene" uid="uid://bfliqbxo3fkh3" path="res://scenes/circle.tscn" id="2_d7bkk"]
+[ext_resource type="PackedScene" uid="uid://bd7uvnqsij0ya" path="res://scenes/board.tscn" id="2_lcexk"]
+[ext_resource type="PackedScene" uid="uid://cdmnk065kixh2" path="res://scenes/cross.tscn" id="3_tr6ee"]
+[ext_resource type="PackedScene" uid="uid://7rsglf2xj5rd" path="res://scenes/game_over_menu.tscn" id="5_la0ur"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3n81j"]
+bg_color = Color(0, 0.666667, 0.803922, 1)
+border_width_left = 5
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_samg4"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 5
+shadow_offset = Vector2(5, 5)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_jbt5h")
+circle_scene = ExtResource("2_d7bkk")
+cross_scene = ExtResource("3_tr6ee")
+
+[node name="Board" parent="." instance=ExtResource("2_lcexk")]
+position = Vector2(300, 300)
+
+[node name="SidePanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(300, 600)
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3n81j")
+
+[node name="PlayerLabel" type="Label" parent="."]
+offset_left = 600.0
+offset_top = 120.0
+offset_right = 900.0
+offset_bottom = 187.0
+theme_override_font_sizes/font_size = 46
+text = "Next Player:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerPanel" type="Panel" parent="."]
+offset_left = 650.0
+offset_top = 200.0
+offset_right = 850.0
+offset_bottom = 400.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_samg4")
+
+[node name="GameOverMenu" parent="." instance=ExtResource("5_la0ur")]
+process_mode = 2
+
+[connection signal="restart" from="GameOverMenu" to="." method="_on_game_over_menu_restart"]
